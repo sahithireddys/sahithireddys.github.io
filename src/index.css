@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f7f8f6;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.62;
+  filter: blur(0.6px);
+  animation-name: heroDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.skill-color-1 {
+  background-color: #ccfbf1; /* teal light */
+}
+
+.skill-color-2 {
+  background-color: #dbeafe; /* blue light */
+}
+
+.skill-color-3 {
+  background-color: #ede9fe; /* purple light */
+}
+
+.skill-color-4 {
+  background-color: #cffafe; /* cyan light */
+}
+
+.skill-color-5 {
+  background-color: #a7f3d0; /* soft emerald (from teal side) */
+}
+
+.skill-color-6 {
+  background-color: #c7d2fe; /* soft indigo (between blue & purple) */
+}
+
+.skill-color {
+  color: #0f172a;
+  transition: all 0.25s ease;
+}
+
+.skill-color:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(148, 163, 184, 0.25);
+}
+
+.hero-orb-1,
+.hero-orb-5,
+.hero-orb-9,
+.hero-orb-13 {
+  background: rgba(94, 234, 212, 0.9);
+}
+
+.hero-orb-2,
+.hero-orb-6,
+.hero-orb-10,
+.hero-orb-14 {
+  background: rgba(147, 197, 253, 0.9);
+}
+
+.hero-orb-3,
+.hero-orb-7,
+.hero-orb-11,
+.hero-orb-15 {
+  background: rgba(196, 181, 253, 0.9);
+}
+
+.hero-orb-4,
+.hero-orb-8,
+.hero-orb-12,
+.hero-orb-16 {
+  background: rgba(94, 234, 212, 0.75);
+}
+
+/* lower start positions + smaller sizes + faster movement */
+.hero-orb-1  { width: 8px;  height: 8px;  left: 6%;  top: 20%; animation-duration: 4.4s; animation-delay: 0s; }
+.hero-orb-2  { width: 10px; height: 10px; left: 14%; top: 100%; animation-duration: 4.0s; animation-delay: 1s; }
+.hero-orb-3  { width: 9px;  height: 9px;  left: 22%; top: 70%; animation-duration: 4.3s; animation-delay: 2s; }
+.hero-orb-4  { width: 11px; height: 11px; left: 30%; top: 40%; animation-duration: 3.9s; animation-delay: 0.6s; }
+
+.hero-orb-5  { width: 8px;  height: 8px;  left: 38%; top: 44%; animation-duration: 4.2s; animation-delay: 1.6s; }
+.hero-orb-6  { width: 10px; height: 10px; left: 46%; top: 100%; animation-duration: 3.8s; animation-delay: 2.4s; }
+.hero-orb-7  { width: 9px;  height: 9px;  left: 54%; top: 10%; animation-duration: 4.5s; animation-delay: 1.1s; }
+.hero-orb-8  { width: 12px; height: 12px; left: 62%; top: 75%; animation-duration: 3.7s; animation-delay: 0.4s; }
+
+.hero-orb-9  { width: 8px;  height: 8px;  left: 70%; top: 42%; animation-duration: 4.1s; animation-delay: 2.2s; }
+.hero-orb-10 { width: 10px; height: 10px; left: 78%; top: 24%; animation-duration: 3.9s; animation-delay: 1.8s; }
+.hero-orb-11 { width: 8px;  height: 8px;  left: 86%; top: 100%; animation-duration: 4.4s; animation-delay: 2.8s; }
+.hero-orb-12 { width: 13px; height: 13px; left: 92%; top: 80%; animation-duration: 3.6s; animation-delay: 0.8s; }
+
+.hero-orb-13 { width: 9px;  height: 9px;  left: 10%; top: 56%; animation-duration: 4.2s; animation-delay: 1.3s; }
+.hero-orb-14 { width: 11px; height: 11px; left: 28%; top: 82%; animation-duration: 3.8s; animation-delay: 2.6s; }
+.hero-orb-15 { width: 8px;  height: 8px;  left: 58%; top: 100%; animation-duration: 4.0s; animation-delay: 0.9s; }
+.hero-orb-16 { width: 12px; height: 12px; left: 84%; top: 23%; animation-duration: 3.7s; animation-delay: 1.9s; }
+
+.hero-orb-17 { width: 8px;  height: 8px;  left: 10%; top: 72%; animation-duration: 4.2s; animation-delay: 1.3s; }
+.hero-orb-18 { width: 10px; height: 10px; left: 28%; top: 58%; animation-duration: 3.8s; animation-delay: 2.6s; }
+.hero-orb-19 { width: 12x;  height: 8px;  left: 58%; top: 100%; animation-duration: 4.0s; animation-delay: 0.9s; }
+.hero-orb-20 { width: 10px; height: 10px; left: 84%; top: 25%; animation-duration: 3.7s; animation-delay: 1.9s; }
+
+.hero-orb-21 { width: 9px;  height: 9px;  left: 10%; top: 47%; animation-duration: 4.2s; animation-delay: 1.3s; }
+.hero-orb-22 { width: 11px; height: 11px; left: 28%; top: 74%; animation-duration: 3.8s; animation-delay: 2.6s; }
+.hero-orb-23 { width: 10px; height: 10px; left: 58%; top: 100%; animation-duration: 4.0s; animation-delay: 0.9s; }
+.hero-orb-24 { width: 12px; height: 12px; left: 84%; top: 33%; animation-duration: 3.7s; animation-delay: 1.9s; }
+
+@keyframes heroDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(30px, -300px, 0) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-20px, -700px, 0) scale(0.9);
+    opacity: 0;
+  }
+}

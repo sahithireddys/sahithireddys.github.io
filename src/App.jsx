@@ -6,6 +6,7 @@ import AboutSection from "./components/AboutSection";
 import ExperienceSection from "./components/ExperienceSection";
 import SkillsSection from "./components/SkillsSection";
 import ProjectsSection from "./components/ProjectsSection";
+import CertificationsSection from "./components/CertificationsSection";
 import PublicationsSection from "./components/PublicationsSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
@@ -15,6 +16,7 @@ import { skills, categoryColors, getColor } from "./data/skills";
 import { experiences } from "./data/experiences";
 import { projects } from "./data/projects";
 import { education } from "./data/education";
+import { certifications } from "./data/certifications";
 import { publications } from "./data/publications";
 import { navItems } from "./data/navItems";
 
@@ -201,6 +203,8 @@ export default function PortfolioOnePage() {
         <SkillsSection skills={skills} categoryColors={categoryColors} />
 
         <ProjectsSection projects={projects} getColor={getColor} />
+        
+        <CertificationsSection certifications={certifications} />
 
         <PublicationsSection publications={publications} />
 

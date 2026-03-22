@@ -22,7 +22,7 @@ export default function SkillsSection({ skills, categoryColors }) {
           {skills.map((category) => (
             <div
               key={category.title}
-              className="rounded-2xl border border-slate-200 bg-white/50 p-4"
+              className="group rounded-[30px] border border-white/80 bg-white p-10 shadow-[0_14px_50px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.01] hover:border hover:border-teal-200 hover:shadow-xl hover:shadow-teal-100/50 md:p-12"
             >
               <p className="mb-3 flex items-center gap-2 text-sm font-semibold tracking-widest text-slate-500 md:text-base">
                 <span className="text-xl">{category.emoji}</span>

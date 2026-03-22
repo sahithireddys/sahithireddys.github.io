@@ -1,5 +1,6 @@
 export const projects = [
   {
+    emoji: "🎓",
     title: "Hoosier Hub – Student Community Platform",
     period: "Jan 2025 – May 2025",
     stack: [
@@ -15,6 +16,7 @@ export const projects = [
     link: "https://github.com/sahithireddys/Hoosier-Hub-Student-Community-Platform-Client",
   },
   {
+    emoji: "📊",
     title: "Distributed Log Processing System",
     period: "Jan 2025 – May 2025",
     stack: ["Azure Blob Storage", "Azure Functions", "SQL", "Serverless"],

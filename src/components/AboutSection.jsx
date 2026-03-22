@@ -81,14 +81,14 @@ export default function AboutSection({ education, getColor }) {
 
         <div className="rounded-[28px] border border-white/80 bg-white p-10 shadow-[0_14px_50px_rgba(15,23,42,0.06)] md:p-12">
           <div className="mb-6 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
               <p className="text-3xl font-semibold text-teal-500">3+</p>
               <p className="mt-1 text-xl font-medium text-slate-500">
                 Years Experience
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
               <p className="text-3xl font-semibold text-teal-500">15+</p>
               <p className="mt-1 text-xl font-medium text-slate-500">
                 Projects Built
@@ -97,20 +97,22 @@ export default function AboutSection({ education, getColor }) {
           </div>
 
           <div className="mb-6 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
               <p className="text-3xl font-semibold text-teal-500">40%+</p>
               <p className="mt-1 text-xl font-medium text-slate-500">
-                Performance Improvement
+                Efficiency Gain
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+            <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
               <p className="text-3xl font-semibold text-teal-500">50K+</p>
               <p className="mt-1 text-xl font-medium text-slate-500">
                 Users Impacted
               </p>
             </div>
           </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
 
           <div className="mb-5 flex items-center gap-3">
             <div className="rounded-2xl bg-teal-50 p-3 text-teal-500">
@@ -121,9 +123,9 @@ export default function AboutSection({ education, getColor }) {
             </h3>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-5 ">
             {education.map((item) => (
-              <div key={item.school} className="rounded-2xl bg-slate-50 p-5">
+              <div key={item.school} className="rounded-2xl bg-slate-50 p-5 border border-slate-200">
                 <h4 className="text-lg font-semibold text-slate-900 md:text-xl">
                   {item.school}
                 </h4>
@@ -138,7 +140,9 @@ export default function AboutSection({ education, getColor }) {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm">
+          </div>
+
+          <div className="mt-6 flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-smtransition hover:-translate-y-1 hover:shadow-lg hover:border-teal-200 hover:shadow-teal-100/50">
             <div className="flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-500">
                 📍

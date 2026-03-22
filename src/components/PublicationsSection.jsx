@@ -1,4 +1,5 @@
 import React from "react";
+import { ExternalLink } from "lucide-react";
 import SectionTitle from "./SectionTitle";
 
 export default function PublicationsSection({ publications }) {
@@ -37,9 +38,9 @@ export default function PublicationsSection({ publications }) {
                   href={pub.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-lg font-medium text-teal-600 hover:underline"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-teal-600 hover:underline"
                 >
-                  Link
+                  View Publication <ExternalLink className="h-4 w-4" />
                 </a>
               )}
             </div>

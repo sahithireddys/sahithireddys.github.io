@@ -31,7 +31,7 @@ export default function ProjectsSection({ projects, getColor }) {
               </div>
 
               <div className="rounded-2xl bg-teal-50 p-3 text-teal-500">
-                <FolderKanban className="h-5 w-5" />
+                <span className="text-xl">{project.emoji}</span>
               </div>
             </div>
 
@@ -56,7 +56,7 @@ export default function ProjectsSection({ projects, getColor }) {
               href={project.link}
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex items-center gap-2 text-base font-semibold text-slate-800 transition group-hover:text-teal-600 md:text-lg"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-teal-600 hover:underline"
             >
               View Project <ExternalLink className="h-4 w-4" />
             </a>

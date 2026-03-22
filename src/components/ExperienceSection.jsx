@@ -20,10 +20,10 @@ export default function ExperienceSection({ experiences }) {
             className={`${index !== experiences.length - 1 ? "mb-10" : ""} relative`}
           >
             <div
-              className={`absolute top-6 -left-[41px] rounded-full border-4 border-[#f7f8f6] md:-left-[57px] ${
+              className={`absolute top-6 -left-8 md:-left-12 -translate-x-1/2 rounded-full border-4 border-[#f7f8f6] ${
                 index < 2
                   ? "h-5 w-5 bg-teal-500 shadow-[0_0_12px_rgba(20,184,166,0.8)]"
-                  : "h-4 w-4 bg-teal-400"
+                  : "h-5 w-5 bg-teal-400"
               }`}
             />
 

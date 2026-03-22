@@ -13,15 +13,19 @@ export default function Header({
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
         <button
           onClick={() => scrollToSection("home")}
-          className="rounded-[20px] border border-white/70 bg-white/70 px-6 py-4 text-[22px] font-semibold tracking-tight text-transparent shadow-sm backdrop-blur"
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg, #34d399 0%, #93c5fd 55%, #c4b5fd 100%)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-          }}
+          className="rounded-[24px] border border-white/70 bg-white/60 px-7 py-5 text-xl font-semibold shadow-sm backdrop-blur transition hover:bg-white"
         >
-          {profile.heroName}
+          <span
+            className="text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, #34d399 0%, #93c5fd 55%, #c4b5fd 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+            }}
+          >
+            {profile.heroName}
+          </span>
         </button>
 
         <nav className="hidden items-center gap-2 rounded-[24px] border border-white/70 bg-white/60 px-3 py-2 shadow-sm backdrop-blur md:flex">

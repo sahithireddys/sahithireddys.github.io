@@ -2,7 +2,7 @@ export const experiences = [
   {
     company: "Indiana University Bloomington",
     role: "Software Engineer",
-    period: "Oct 2024 – Present",
+    period: "Oct 2024 – May 2026",
     points: [
       "Developed REST API components for a university platform supporting 10k+ student and staff workflows across campus systems.",
       "Implemented 8+ backend endpoints and optimized SQL queries for cross-system data retrieval, reducing response time by 25%.",
@@ -13,7 +13,7 @@ export const experiences = [
   {
     company: "Indiana University Bloomington",
     role: "Associate Instructor – System Programming with C & UNIX ",
-    period: "Aug 2025 – Present",
+    period: "Aug 2025 – May 2026",
     points: [
       "Mentored 100+ students in C and UNIX process control, reinforcing debugging and time/space complexity concepts.",
     ],

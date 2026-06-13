@@ -7,7 +7,7 @@ export const profile = {
   phone: "+1 (812) 558-4397",
   linkedin: "https://www.linkedin.com/in/sahithireddys/",
   github: "https://github.com/sahithireddys",
-  resume: "/resume.pdf",
+  resume: "/resumenew.pdf",
   summary:
     "Software Engineer with experience building scalable backend systems, Java microservices, and serverless cloud pipelines on AWS and Azure. Skilled in distributed systems, REST APIs, and full-stack development with React and Spring Boot. Passionate about building reliable, high-performance systems that power real-world applications.",
 };

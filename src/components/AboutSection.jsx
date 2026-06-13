@@ -59,13 +59,16 @@ export default function AboutSection({ education, getColor }) {
           <div className="mt-6 flex flex-wrap gap-3">
             {[
               "Java",
-              "Distributed Systems",
-              "Microservices",
+              "Spring Boot",
               "AWS",
-              "Azure",
-              "SQL Optimization",
+              "Node.js",
+              "Python",
               "REST APIs",
+              "Microservices",
+              "PostgreSQL",
               "React",
+              "Docker",
+              "Azure",
             ].map((skill, index) => (
               <span
                 key={skill}

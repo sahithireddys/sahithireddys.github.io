@@ -45,8 +45,8 @@ export default function ExperienceSection({ experiences }) {
 
               <ul className="mt-6 space-y-4 text-base leading-relaxed text-slate-600 md:text-lg">
                 {job.points.map((point) => (
-                  <li key={point} className="flex gap-3">
-                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-teal-500" />
+                  <li key={point} className="flex items-start gap-3">
+                    <span className="mt-2 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-teal-500" />
                     <span>{point}</span>
                   </li>
                 ))}

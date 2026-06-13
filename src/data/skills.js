@@ -23,10 +23,10 @@ export const skills = [
     items: [
       "Java",
       "Python",
-      "C/C++",
-      "SQL",
       "JavaScript",
       "TypeScript",
+      "SQL",
+      "C/C++",
       "HTML",
       "CSS",
     ],
@@ -36,12 +36,10 @@ export const skills = [
     emoji: "⚙️",
     items: [
       "Spring Boot",
-      "FastAPI",
       "Node.js",
-      "Express.js",
       "React",
       "Next.js",
-      "Angular",
+      "FastAPI",
     ],
   },
   {
@@ -50,9 +48,24 @@ export const skills = [
     items: [
       "Distributed Systems",
       "Microservices",
-      "Event-Driven Architecture",
       "REST API Design",
       "System Design",
+    ],
+  },
+  {
+    title: "Databases",
+    emoji: "🗄️",
+    items: ["MySQL", "OracleDB", "PostgreSQL",  "DynamoDB", "MongoDB"],
+  },
+  {
+    title: "Cloud / DevOps",
+    emoji: "☁️",
+    items: [
+      "AWS",
+      "Azure",
+      "Docker",
+      "GitHub Actions",
+      "CI/CD",
     ],
   },
   {
@@ -65,24 +78,6 @@ export const skills = [
       "Prompt Engineering",
       "ChatGPT",
       "Claude",
-    ],
-  },
-  {
-    title: "Databases",
-    emoji: "🗄️",
-    items: ["PostgreSQL", "MySQL", "SQL Server", "MongoDB", "Oracle"],
-  },
-  {
-    title: "Cloud / DevOps",
-    emoji: "☁️",
-    items: [
-      "AWS",
-      "Azure",
-      "Docker",
-      "Kubernetes",
-      "CI/CD",
-      "GitHub Actions",
-      "Terraform",
     ],
   },
 ];

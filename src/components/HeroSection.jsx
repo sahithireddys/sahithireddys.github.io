@@ -70,9 +70,9 @@ export default function HeroSection({ profile, displayText }) {
         </h1>
 
         <p className="relative z-10 mt-6 max-w-[1100px] px-6 text-center text-xl font-semibold leading-snug text-slate-600 md:text-[1.9rem]">
-          Software Engineer{" "}
+          Backend Engineer{" "}
           <span className="font-normal text-slate-500">
-            building scalable platforms, cloud-native systems, and impactful applications
+            with production experience across fintech, cloud infrastructure, and full-stack platforms — always learning, always building
           </span>
         </p>
 

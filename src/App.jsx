@@ -22,10 +22,10 @@ import { navItems } from "./data/navItems";
 
 const roles = [
   "Backend Engineer",
-  "Platform Builder",
-  "Cloud & AI Enthusiast",
-  "Application Engineer",
   "Full-Stack Developer",
+  "Cloud & AI Enthusiast",
+  "Java & Spring Boot Developer",
+  "AWS Solutions Engineer",
 ];
 
 export default function PortfolioOnePage() {

@@ -59,6 +59,7 @@ function Scene() {
   const projRefs = useRef([])
   const mouse = useRef({ x: 0, y: 0 })
   const dom = useRef({})
+  const parked = useRef(null)
 
   const uniforms = useMemo(
     () => ({
@@ -127,7 +128,7 @@ function Scene() {
   // tell the page the blob is live, so the plain CSS bead in Experience hides itself
   useEffect(() => {
     document.documentElement.classList.add('blob-live')
-    return () => document.documentElement.classList.remove('blob-live')
+    return () => document.documentElement.classList.remove('blob-live', 'blob-park')
   }, [])
 
   useFrame((state) => {
@@ -137,7 +138,14 @@ function Scene() {
     const W = size.width
     const H = size.height
     const narrow = W < 800
+    const phone = W < 700 // phones: no blob at all
     const sy = window.scrollY
+    if (parked.current !== phone) {
+      parked.current = phone
+      document.documentElement.classList.toggle('blob-park', phone) // brings the plain CSS bead back in Experience
+    }
+    root.current.visible = !phone
+    if (phone) return // no blob on phones: skip all the work
 
     // anchors (looked up lazily; they may mount after the canvas)
     const d = dom.current
@@ -165,7 +173,7 @@ function Scene() {
     let sxk = 1
     let syk = 1
 
-    if (d.about && d.anchor) {
+    if (d.about && d.anchor && !phone) {
       // live rects of the anchors
       const aboutRect = d.about.getBoundingClientRect()
       const aRect = d.anchor.getBoundingClientRect()

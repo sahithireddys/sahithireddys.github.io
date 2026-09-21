@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Option D demo</title>
+<style>
+:root{--teal:#A8D4DC;--peri:#959BB9;--mauve:#73617B;--cocoa:#46292B;--black:#000;--p:0}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:"Helvetica Neue",Arial,sans-serif;color:#000;background:linear-gradient(170deg,#A8D4DC,#959BB9 60%,#73617B);background-attachment:fixed}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:6px;padding:8px 10px;border-radius:99px;background:rgba(255,255,255,.28);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.5);font-size:13px;transition:all .4s}
+nav a{padding:6px 14px;border-radius:99px;color:#000;text-decoration:none;opacity:.7}
+nav a:hover{background:rgba(255,255,255,.5);opacity:1}
+section{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;pointer-events:none}
+section h1,section h2{font-weight:600;letter-spacing:-.03em;line-height:.95}
+section h1{font-size:clamp(48px,9vw,120px)}
+section h2{font-size:clamp(36px,6vw,80px)}
+section p{margin-top:16px;max-width:380px;font-size:17px;color:var(--cocoa)}
+.r{align-items:flex-end;text-align:right}
+.r p{margin-left:auto}
+.tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa);margin-bottom:14px}
+.hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:5;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa);transition:opacity .4s}
+.reveal{opacity:0;transform:translateY(30px);transition:all .9s cubic-bezier(.2,.8,.2,1)}
+.in .reveal{opacity:1;transform:none}
+.in .reveal:nth-child(2){transition-delay:.12s}.in .reveal:nth-child(3){transition-delay:.24s}
+#s3{background:transparent}
+</style></head><body>
+<canvas id="c"></canvas>
+<nav><a href="#s0">Home</a><a href="#s1">Backend</a><a href="#s2">Cloud</a><a href="#s3">AI</a></nav>
+<div class="hint" id="hint">Move your mouse · then scroll</div>
+
+<section id="s0" class="in"><div class="tag reveal">Portfolio · 2026</div><h1 class="reveal">Sahithi<br>Reddy</h1><p class="reveal">Software engineer building backend systems, cloud pipelines and AI agents.</p></section>
+<section id="s1" class="r"><div class="tag reveal">01 · Backend</div><h2 class="reveal">Systems that<br>move money.</h2><p class="reveal">Kafka, Spring Boot and PostgreSQL. 3,600+ transactions a minute with 0% failures.</p></section>
+<section id="s2"><div class="tag reveal">02 · Cloud</div><h2 class="reveal">Pipelines that<br>scale quietly.</h2><p class="reveal">Serverless AWS ingestion processing 20,000+ submissions a day, 87% faster.</p></section>
+<section id="s3" class="r"><div class="tag reveal">03 · AI</div><h2 class="reveal">Agents that learn<br>once, replay forever.</h2><p class="reveal">LLM-driven browser automation that turns a task into a reusable capability.</p></section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const canvas=document.getElementById('c');
+let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});}catch(e){document.getElementById('hint').textContent='WebGL not available in this preview';return;}
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(40,1,.1,100);camera.position.z=6;
+const vs=`
+uniform float uTime,uAmp,uSplit;uniform vec2 uMouse;
+varying vec3 vN,vV,vP;
+float h(vec3 p){return sin(p.x*2.1+uTime)*sin(p.y*2.3-uTime*.8)*sin(p.z*1.9+uTime*.6);}
+void main(){
+ vec3 p=position;
+ float d=h(p*1.4)*uAmp+h(p*3.1+uTime*.3)*uAmp*.3;
+ d+=uSplit*sin(atan(p.y,p.x)*4.0+uTime*1.2)*.25;
+ p+=normal*d;
+ p.xy+=uMouse*.15*p.z;
+ vec4 mv=modelViewMatrix*vec4(p,1.);
+ vN=normalize(normalMatrix*(normal+normalize(p-position+.0001)*.3));
+ vV=-mv.xyz;vP=p;
+ gl_Position=projectionMatrix*mv;}`;
+const fs=`
+precision highp float;
+uniform float uTime,uIri;varying vec3 vN,vV,vP;
+vec3 pal(float t){return .5+.5*cos(6.2832*(vec3(0.,.33,.67)+t));}
+void main(){
+ vec3 n=normalize(vN),v=normalize(vV);
+ float f=pow(1.-max(dot(n,v),0.),2.2);
+ vec3 teal=vec3(.659,.831,.863),peri=vec3(.584,.608,.725),mauve=vec3(.451,.38,.482),cocoa=vec3(.275,.16,.17);
+ float band=n.y*.5+.5+.25*sin(n.x*5.+uTime*.6);
+ vec3 chrome=mix(mauve,teal,smoothstep(.15,.85,band));
+ chrome=mix(chrome,peri,smoothstep(.6,1.,sin(n.x*3.+n.y*2.)*.5+.5)*.6);
+ chrome=mix(chrome,cocoa,smoothstep(.2,0.,band)*.7);
+ vec3 irid=pal(f*1.2+n.x*.3+uTime*.05)*.55+.45;
+ vec3 col=mix(chrome,irid,f*uIri);
+ vec3 l=normalize(vec3(.6,.8,.7));
+ float spec=pow(max(dot(reflect(-l,n),v),0.),40.);
+ col+=spec*.9;
+ col+=pow(f,3.)*.25;
+ gl_FragColor=vec4(col,1.);}`;
+const mat=new THREE.ShaderMaterial({vertexShader:vs,fragmentShader:fs,uniforms:{uTime:{value:0},uAmp:{value:.18},uSplit:{value:0},uMouse:{value:new THREE.Vector2()},uIri:{value:0.8}}});
+const mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,48),mat);
+scene.add(mesh);
+// small orbiting satellites
+const sats=[];for(let i=0;i<5;i++){const m=new THREE.Mesh(new THREE.IcosahedronGeometry(.16,16),mat);scene.add(m);sats.push(m);}
+function resize(){const w=innerWidth,hh=innerHeight;renderer.setSize(w,hh,false);camera.aspect=w/hh;camera.updateProjectionMatrix();}
+addEventListener('resize',resize);resize();
+const mouse={x:0,y:0,tx:0,ty:0};
+addEventListener('pointermove',e=>{mouse.tx=e.clientX/innerWidth*2-1;mouse.ty=-(e.clientY/innerHeight*2-1);document.getElementById('hint').style.opacity=0;});
+// scroll stops: x-pos (in view units), scale, amp, split, orbit
+const stops=[{x:.32,y:0,s:1,a:.16,sp:0,o:.0},{x:-.34,y:0,s:1.15,a:.32,sp:0,o:.0},{x:.3,y:0,s:.8,a:.12,sp:0,o:1},{x:-.3,y:0,s:1.05,a:.22,sp:1,o:.5}];
+const lerp=(a,b,t)=>a+(b-a)*t, ease=t=>t*t*(3-2*t);
+let cur={x:.32,y:0,s:1,a:.16,sp:0,o:0},rot=0;
+const sections=[...document.querySelectorAll('section')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.35});
+sections.forEach(s=>io.observe(s));
+const nav=document.querySelector('nav');
+function tick(t){
+ t*=.001;
+ const max=document.documentElement.scrollHeight-innerHeight;
+ const pr=max>0?scrollY/max*(stops.length-1):0;
+ const i=Math.min(Math.floor(pr),stops.length-2),f=ease(pr-i);
+ const A=stops[i],B=stops[i+1];
+ const tgt={};for(const k in A)tgt[k]=lerp(A[k],B[k],f);
+ for(const k in cur)cur[k]+= (tgt[k]-cur[k])*.08;
+ mouse.x+=(mouse.tx-mouse.x)*.06;mouse.y+=(mouse.ty-mouse.y)*.06;
+ const vh=2*Math.tan(camera.fov*Math.PI/360)*camera.position.z, vw=vh*camera.aspect;
+ const narrow=innerWidth<800;
+ mesh.position.set(narrow?0:cur.x*vw*.9,cur.y+mouse.y*.25,0);
+ const sc=cur.s*(narrow?.65:1);mesh.scale.setScalar(sc);
+ rot+=.004;mesh.rotation.y=rot+mouse.x*.6+pr*1.2;mesh.rotation.x=mouse.y*.4+pr*.4;
+ mat.uniforms.uTime.value=t;mat.uniforms.uAmp.value=cur.a;mat.uniforms.uSplit.value=cur.sp;
+ mat.uniforms.uMouse.value.set(mouse.x,mouse.y);
+ sats.forEach((s,k)=>{const a=t*.7+k*1.256,r=2.2*sc;s.visible=cur.o>.02;s.scale.setScalar(cur.o);s.position.set(mesh.position.x+Math.cos(a)*r,mesh.position.y+Math.sin(a*1.3)*r*.6,Math.sin(a)*.8);});
+ nav.style.background=scrollY>80?'rgba(20,10,20,.35)':'rgba(255,255,255,.28)';
+ nav.style.color=scrollY>80?'#fff':'#000';
+ nav.querySelectorAll('a').forEach(a=>a.style.color=scrollY>80?'#fff':'#000');
+ renderer.render(scene,camera);requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+})();
+</script>
+</body></html>

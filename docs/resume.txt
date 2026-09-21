@@ -1,0 +1,60 @@
+                                         Sahithi Reddy Senagapally
+           Morganville, NJ (Open to Relocation) | +1 (812) 558-4397 | ssenagapally@gmail.com | linkedin.com/in/sahithireddys/
+
+Education
+Indiana University Bloomington                                                                                 Aug 2024 – May 2026
+Master of Science in Computer Science – GPA: 3.8/4.0
+Relevant Coursework: Applied Algorithms, Computer Networks, Software Engineering, Cloud Computing | TA: C Programming and Unix
+Gokaraju Rangaraju Institute of Engineering and Technology                                                     Aug 2019 – May 2023
+Bachelor of Technology in Computer Science and Engineering – GPA: 3.7/4.0
+Relevant Coursework: Data Structures, Operating Systems, Database Management Systems, Artificial Intelligence, Machine Learning
+Technical Skills
+Programming Languages: Java, Python, JavaScript, TypeScript, SQL, C, C++, C#, Bash, HTML, CSS
+Frameworks/Libraries: Spring Boot, Node.js, React, Angular, Next.js, Apache Kafka, FastAPI, Playwright
+Architecture: RESTful APIs, Microservices, Distributed Systems, Event-Driven Architecture, Object-Oriented Design, System Design
+Databases: PostgreSQL, MySQL, Oracle Database, DynamoDB, SQL Server, MongoDB, Redis
+Cloud/DevOps: AWS (Lambda, API Gateway, S3, IAM, EC2), Azure, GCP, Docker, Kubernetes, Terraform, GitHub Actions, CI/CD, Git
+Testing/Monitoring: JUnit, Mockito, Testcontainers, PyTest, k6, Grafana
+AI/ML: LangChain, RAG, OpenAI API, Anthropic API, PyTorch, NumPy, Claude Code, Codex
+Professional Experience
+Indiana University Bloomington                                                                                         Oct 2024 – May 2026
+Software Engineer                                                                                                            Bloomington, IN
+• Redesigned enrollment processing for a course-management platform serving 10,000+ users to handle concurrent requests safely,
+  introducing transactional MySQL capacity checks and concurrency controls that cut duplicate enrollment conflicts by ~99% and prevented
+  inconsistent course-capacity updates.
+• Delivered 8+ Node.js REST APIs for course and user-management workflows, adding role-based authorization and cutting high-traffic
+  endpoint response time by 25% through SQL query tuning, index optimization, and server-side pagination.
+Isomerous                                                                                                              Jun 2025 – Aug 2025
+Software Developer Intern                                                                                                        Ashburn, VA
+• Designed and deployed a serverless AWS backend using API Gateway, Python Lambda, DynamoDB, S3, and IAM, replacing a manual
+  product-inspection workflow with an API-driven ingestion pipeline and reducing processing turnaround time by 87%.
+• Developed Lambda functions for payload validation, metadata transformation, image processing, and coordinated S3/DynamoDB
+  persistence, enabling traceable retrieval and scaling the ingestion pipeline to 20,000+ submissions/day.
+Tata Consultancy Services                                                                                               May 2023 – Jul 2024
+Software Engineer                                                                                                            Bangalore, India
+• Engineered Java/Spring Boot rule-engine services for AML transaction monitoring across 1M+ financial transactions daily, improving
+  fraud-detection true positives by 83% through configurable risk-pattern evaluation and optimized rule execution.
+• Cut real-time alert latency by 75%, from 12 to 3 minutes, addressing a critical requirement from 4 banking clients by optimizing Oracle
+  SQL, adding indexes, and resolving multithreading bottlenecks; improvements contributed to onboarding 2 additional clients.
+• Built a Kafka-based event-driven monitoring service with consumer groups, retry handling, idempotent consumers, and ordering
+  safeguards, replacing batch processing with a fault-tolerant streaming pipeline; validated with JUnit and Spring Boot integration tests.
+• Automated regulatory watchlist ingestion and reconciliation using validation, deduplication, and optimized Oracle database operations,
+  boosting daily processing throughput by 40%.
+ADP                                                                                                                    July 2022 – Nov 2022
+Software Engineer                                                                                                           Hyderabad, India
+• Architected backend reporting APIs that aggregated employee data across internal services, implementing search, sorting, pagination,
+  and response transformations to minimize payload size and support responsive on-demand reporting.
+• Improved Report Builder load time by 77%, from 8.4s to 1.9s, for 1,000+ users by consolidating redundant API requests, parallelizing
+  downstream calls, and streamlining React rendering and integrations with authentication and payments services.
+Projects
+Distributed Payment Processing & Ledger Platform - GitHub                                                                         Sept 2026
+• Built a distributed payment and double-entry ledger platform in Java/Spring Boot with Kafka-based async workflows, PostgreSQL, and
+  Redis, sustaining 3,600+ transactions/min at 12.6ms p95 latency with 0% failed requests under k6 load testing.
+• Implemented a transactional outbox pattern with idempotent consumers and consistent lock ordering to prevent duplicate processing and
+  eliminate deadlocks; validated with Testcontainers and Mockito tests, deployed via GitHub Actions CI/CD.
+AI Agent for Legacy System Automation - GitHub                                                                                     Aug 2026
+• Developed an AI agent that operates legacy, API-less bank/credit-union back-office UIs by controlling a real browser via Playwright, using
+  LLM-driven discovery to convert successful task runs into reusable, typed "capability artifacts."
+• Designed a deterministic replay engine that executes learned capability artifacts in production without re-invoking the LLM, backed by
+  Pydantic schema validation, an error taxonomy, human-escalation pathways, and structured evidence logging.
+

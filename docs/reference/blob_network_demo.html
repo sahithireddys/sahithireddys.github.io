@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blob + network demo</title>
+<style>
+:root{--teal:#A8D4DC;--peri:#959BB9;--mauve:#73617B;--cocoa:#46292B}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:"Helvetica Neue",Arial,sans-serif;background:linear-gradient(170deg,#A8D4DC,#959BB9 60%,#73617B);color:#000}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+.copy{position:fixed;left:6vw;top:50%;transform:translateY(-50%);z-index:2;pointer-events:none}
+.tag{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa);margin-bottom:14px}
+h1{font-size:clamp(44px,7.5vw,104px);font-weight:600;letter-spacing:-.03em;line-height:.95}
+p{margin-top:16px;max-width:340px;font-size:17px;color:var(--cocoa)}
+.tg{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:6px;padding:8px;border-radius:99px;background:rgba(255,255,255,.28);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.5)}
+.tg button{border:0;background:transparent;padding:9px 15px;border-radius:99px;font-size:13px;cursor:pointer;color:#000;font-family:inherit;opacity:.6}
+.tg button.on{background:#000;color:#A8D4DC;opacity:1}
+.lbl{position:fixed;z-index:4;left:0;top:0;transform:translate(-50%,-50%);font-size:11px;letter-spacing:.06em;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.6);color:#000;white-space:nowrap;cursor:default;will-change:transform}
+.lbl .d{display:none;margin-top:3px;font-size:11px;color:var(--cocoa);letter-spacing:0}
+.lbl:hover{background:#000;color:#A8D4DC;z-index:9}.lbl:hover .d{display:block;color:#fff}
+.lbl.proj{font-weight:600;font-size:12px;padding:6px 14px}
+.hint{position:fixed;top:22px;right:26px;z-index:5;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cocoa)}
+@media(max-width:800px){.copy{top:16%;transform:none}.tg{flex-wrap:wrap;width:94%;justify-content:center;border-radius:24px}}
+</style></head><body>
+<canvas id="c"></canvas>
+<div class="copy"><div class="tag">Portfolio · 2026</div><h1>Sahithi<br>Reddy</h1><p>Software engineer building backend systems, cloud pipelines and AI agents.</p></div>
+<div class="hint">Hover the labels · move your mouse</div>
+<div class="tg" id="tg">
+<button class="on" data-k="skills">Skill nodes</button><button class="on" data-k="packets">Data packets</button><button class="on" data-k="proj">Project satellites</button><button class="on" data-k="mesh">Surface mesh</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const canvas=document.getElementById('c');
+let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});}catch(e){document.querySelector('.hint').textContent='WebGL not available in this preview';return;}
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(40,1,.1,100);camera.position.z=8;
+
+const VS=`
+uniform float uTime,uAmp,uPullAmt;uniform vec3 uPull;
+varying vec3 vN,vV;
+float h(vec3 p){return sin(p.x*2.1+uTime)*sin(p.y*2.3-uTime*.8)*sin(p.z*1.9+uTime*.6);}
+void main(){
+ vec3 p=position;
+ float d=h(p*1.4)*uAmp+h(p*3.1+uTime*.3)*uAmp*.3;
+ p+=normal*d;
+ p+=(uPull-p)*exp(-length(p-uPull)*1.4)*uPullAmt;
+ vec3 nn=normalize(normal+normalize(p-position+vec3(.0001))*.3);
+ vec4 mv=modelViewMatrix*vec4(p,1.);
+ vN=normalize(normalMatrix*nn);vV=-mv.xyz;
+ gl_Position=projectionMatrix*mv;}`;
+const FS=`
+precision highp float;
+uniform float uTime;varying vec3 vN,vV;
+vec3 pal(float t){return .5+.5*cos(6.2832*(vec3(0.,.33,.67)+t));}
+void main(){
+ vec3 n=normalize(vN),v=normalize(vV);
+ float f=pow(1.-max(dot(n,v),0.),2.2);
+ vec3 teal=vec3(.659,.831,.863),peri=vec3(.584,.608,.725),mauve=vec3(.451,.38,.482),cocoa=vec3(.275,.16,.17);
+ float band=n.y*.5+.5+.25*sin(n.x*5.+uTime*.6);
+ vec3 chrome=mix(mauve,teal,smoothstep(.15,.85,band));
+ chrome=mix(chrome,peri,smoothstep(.6,1.,sin(n.x*3.+n.y*2.)*.5+.5)*.6);
+ chrome=mix(chrome,cocoa,smoothstep(.2,0.,band)*.7);
+ vec3 irid=pal(f*1.2+n.x*.3+uTime*.05)*.55+.45;
+ vec3 col=mix(chrome,irid,f*.8);
+ col+=pow(max(dot(reflect(-normalize(vec3(.6,.8,.7)),n),v),0.),40.)*.9;
+ col+=pow(f,3.)*.25;
+ gl_FragColor=vec4(col,1.);}`;
+const FS_MESH=`
+precision highp float;
+uniform float uTime;varying vec3 vN,vV;
+void main(){
+ float f=pow(1.-max(dot(normalize(vN),normalize(vV)),0.),1.5);
+ gl_FragColor=vec4(mix(vec3(.275,.16,.17),vec3(1.),f),.28+f*.5);}`;
+const uni={uTime:{value:0},uAmp:{value:.2},uPullAmt:{value:.35},uPull:{value:new THREE.Vector3(0,0,3)}};
+const chromeMat=new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS,uniforms:uni});
+const solidUni={uTime:uni.uTime,uAmp:{value:0},uPullAmt:{value:0},uPull:uni.uPull};
+const solidMat=new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS,uniforms:solidUni});
+const meshMat=new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS_MESH,uniforms:uni,transparent:true,depthWrite:false});
+
+const root=new THREE.Group();scene.add(root);
+const blob=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,48),chromeMat);root.add(blob);
+// surface mesh
+const ico=new THREE.IcosahedronGeometry(1.5,3);
+const wf=new THREE.WireframeGeometry(ico);
+const wp=wf.attributes.position,nrm=new Float32Array(wp.count*3);
+for(let i=0;i<wp.count;i++){const v=new THREE.Vector3(wp.getX(i),wp.getY(i),wp.getZ(i)).normalize();nrm.set([v.x,v.y,v.z],i*3);}
+wf.setAttribute('normal',new THREE.BufferAttribute(nrm,3));
+const mesh=new THREE.LineSegments(wf,meshMat);mesh.scale.setScalar(1.015);blob.add(mesh);
+
+// ---- skill nodes
+const skills=[
+ ['Kafka','Event-driven fraud pipeline, 1M+ txns/day'],
+ ['AWS','Serverless ingestion, 20,000+/day, 87% faster'],
+ ['Spring Boot','AML rule-engine services, 83% more true positives'],
+ ['PostgreSQL','Ledger DB, 3,600+ tx/min at 12.6ms p95'],
+ ['React','Report Builder load 8.4s to 1.9s'],
+ ['Docker','Containerized services and CI/CD'],
+ ['Python','Lambda functions and the AI agent'],
+ ['Playwright','Browser automation agent']];
+const skillG=new THREE.Group();root.add(skillG);
+const skillNodes=skills.map((s,i)=>{
+ const m=new THREE.Mesh(new THREE.IcosahedronGeometry(.09,12),solidMat);skillG.add(m);
+ m.userData={a:i/skills.length*Math.PI*2,inc:(i%3-1)*.55,r:2.5+(i%2)*.25,sp:.25+(i%3)*.05};
+ const el=document.createElement('div');el.className='lbl';el.innerHTML=s[0]+'<div class="d">'+s[1]+'</div>';document.body.appendChild(el);m.userData.el=el;return m;});
+const lineGeo=new THREE.BufferGeometry();
+const linePos=new Float32Array(skillNodes.length*4*3);lineGeo.setAttribute('position',new THREE.BufferAttribute(linePos,3));
+const lines=new THREE.LineSegments(lineGeo,new THREE.LineBasicMaterial({color:0x46292b,transparent:true,opacity:.35}));lines.frustumCulled=false;skillG.add(lines);
+
+// ---- project satellites
+const projs=[['Payment Ledger','3,600+ tx/min · 0% failures'],['AI Agent','Learn once, replay deterministically'],['Serverless Pipeline','87% faster · 20,000+/day']];
+const projG=new THREE.Group();root.add(projG);
+const projNodes=projs.map((s,i)=>{
+ const m=new THREE.Mesh(new THREE.IcosahedronGeometry(.3,24),solidMat);projG.add(m);
+ m.userData={a:i/projs.length*Math.PI*2+.5,r:3.05,sp:.16,inc:(i-1)*.35};
+ const el=document.createElement('div');el.className='lbl proj';el.innerHTML=s[0]+'<div class="d">'+s[1]+'</div>';document.body.appendChild(el);m.userData.el=el;return m;});
+
+// ---- data packets
+const packG=new THREE.Group();root.add(packG);
+const N=14,curves=[],packets=[];
+for(let i=0;i<N;i++){
+ const dir=new THREE.Vector3(Math.random()*2-1,Math.random()*2-1,Math.random()*2-1).normalize();
+ const start=dir.clone().multiplyScalar(3.4),end=dir.clone().multiplyScalar(1.5);
+ const side=new THREE.Vector3().crossVectors(dir,new THREE.Vector3(0,1,.3)).normalize().multiplyScalar(1.0);
+ const c=new THREE.QuadraticBezierCurve3(start,dir.clone().multiplyScalar(2.6).add(side),end);curves.push(c);
+ const g=new THREE.BufferGeometry().setFromPoints(c.getPoints(30));
+ packG.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x46292b,transparent:true,opacity:.18})));
+ packets.push({t:Math.random(),v:.12+Math.random()*.15});}
+const pgeo=new THREE.BufferGeometry();pgeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3));
+const pts=new THREE.Points(pgeo,new THREE.PointsMaterial({size:.14,color:0xffffff,transparent:true,opacity:.95}));pts.frustumCulled=false;packG.add(pts);
+
+// toggles
+const on={skills:true,packets:true,proj:true,mesh:true};
+document.getElementById('tg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;on[k]=!on[k];b.classList.toggle('on',on[k]);});
+
+function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+addEventListener('resize',resize);resize();
+const mouse={x:0,y:0,tx:0,ty:0};
+addEventListener('pointermove',e=>{mouse.tx=e.clientX/innerWidth*2-1;mouse.ty=-(e.clientY/innerHeight*2-1);});
+const tmp=new THREE.Vector3();
+function place(node,t,extra){
+ const u=node.userData,a=u.a+t*u.sp;
+ const x=Math.cos(a)*u.r,z=Math.sin(a)*u.r;
+ node.position.set(x,Math.sin(a)*u.r*Math.sin(u.inc),z*Math.cos(u.inc));
+}
+function label(node,show){
+ const el=node.userData.el;
+ if(!show){el.style.display='none';return;}
+ el.style.display='block';
+ node.getWorldPosition(tmp);tmp.project(camera);
+ const x=(tmp.x*.5+.5)*innerWidth,y=(-tmp.y*.5+.5)*innerHeight;
+ el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) translate(-50%,-50%)';
+ el.style.opacity=Math.max(.35,Math.min(1,1.4-tmp.z*1.2));
+}
+function tick(ms){
+ const t=ms*.001;uni.uTime.value=t;
+ mouse.x+=(mouse.tx-mouse.x)*.06;mouse.y+=(mouse.ty-mouse.y)*.06;
+ const narrow=innerWidth<800;
+ const vh=2*Math.tan(camera.fov*Math.PI/360)*camera.position.z,vw=vh*camera.aspect;
+ root.position.set(narrow?0:vw*.24,narrow?-vh*.1:0,0);
+ root.scale.setScalar(narrow?.6:.88);
+ blob.rotation.y=t*.2+mouse.x*.5;blob.rotation.x=mouse.y*.3;
+ uni.uPull.value.set(mouse.x*1.8,mouse.y*1.8,1.4);
+ mesh.visible=on.mesh;
+ skillG.visible=on.skills;projG.visible=on.proj;packG.visible=on.packets;
+ skillNodes.forEach(n=>place(n,t));
+ projNodes.forEach(n=>place(n,t));
+ // skill network lines: center + ring neighbours
+ let k=0;
+ skillNodes.forEach((n,i)=>{const nx=skillNodes[(i+1)%skillNodes.length];
+  linePos.set([0,0,0,n.position.x,n.position.y,n.position.z],k);k+=6;
+  linePos.set([n.position.x,n.position.y,n.position.z,nx.position.x,nx.position.y,nx.position.z],k);k+=6;});
+ lineGeo.attributes.position.needsUpdate=true;
+ // packets
+ const pa=pgeo.attributes.position;
+ packets.forEach((p,i)=>{p.t+=p.v*.016;if(p.t>1)p.t=0;curves[i].getPoint(p.t,tmp);pa.setXYZ(i,tmp.x,tmp.y,tmp.z);});
+ pa.needsUpdate=true;
+ renderer.render(scene,camera);
+ root.updateMatrixWorld(true);
+ skillNodes.forEach(n=>label(n,on.skills));
+ projNodes.forEach(n=>label(n,on.proj));
+ requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+})();
+</script>
+</body></html>

@@ -19,7 +19,25 @@ a{color:inherit;text-decoration:none}
 .nav.pill .navin button:hover,.nav.pill .navin a:hover{background:rgba(255,255,255,.18)}
 .navin button,.navin a{white-space:nowrap}
 @media(max-width:1100px){.navin button,.navin a{padding:7px 10px}.navin .brand{padding:7px 12px}}
-@media(max-width:640px){.navin a,.navin .nx{display:none}}
+/* phone menu: hidden on bigger screens */
+.navtoggle,.navpanel{display:none}
+@media(max-width:640px){
+  .nav{flex-direction:column;align-items:center;padding:0 16px}
+  .navin{width:100%;justify-content:space-between;padding:6px 8px 6px 6px}
+  .navin button:not(.brand):not(.navtoggle){display:none}
+  .navin .navtoggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:38px;height:38px;padding:0;opacity:1;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.55)}
+  .nav.pill .navin .navtoggle{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+  .navtoggle i{display:block;width:16px;height:2px;border-radius:2px;background:currentColor;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .menu-open .navtoggle i:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+  .menu-open .navtoggle i:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+  .navpanel{display:flex;flex-direction:column;gap:2px;width:100%;margin-top:8px;padding:10px;border-radius:24px;pointer-events:none;
+    background:rgba(20,10,20,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.22);
+    opacity:0;transform:translateY(-8px) scale(.98);transform-origin:top center;visibility:hidden;
+    transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s}
+  .menu-open .navpanel{opacity:1;transform:none;visibility:visible;pointer-events:auto;transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s}
+  .navpanel button{width:100%;text-align:left;padding:14px 16px;border-radius:16px;font-size:17px;font-weight:500;color:#fff;letter-spacing:-.01em}
+  .navpanel button:hover,.navpanel button:active{background:rgba(255,255,255,.14);color:var(--teal)}
+}
 
 /* ---------- blob stage (one fixed canvas for the whole page) ---------- */
 .blob-stage{position:fixed;inset:0;z-index:20;pointer-events:none}
@@ -545,4 +563,20 @@ html.blob-live.blob-park .bead{opacity:1} /* phones: the blob stays in the hero,
   .hero{height:auto;min-height:0;padding-bottom:14vh}
   .about-left{display:none}
   .about{padding-top:16vh}
+}
+
+/* phones: project text sized in proportion (title, subtitle, summary, bullets, tiles) */
+@media(max-width:680px){
+  .flag h3{font-size:22px;line-height:1.1}
+  .flag-kind{font-size:11px;margin-bottom:8px}
+  .flag-sum{font-size:14px;line-height:1.5}
+  .flag-copy li{font-size:13px;line-height:1.55}
+  .flag-copy li::before{top:17px}
+  .ps-val{font-size:28px}
+  .ps-lab{font-size:12px}
+  .mr-name{font-size:18px}
+  .mr-sum{font-size:13.5px}
+  .mr-list li{font-size:13px}
+  .stack span{font-size:11px}
+  .pd-link{font-size:13px}
 }

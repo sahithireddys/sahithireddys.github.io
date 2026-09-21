@@ -5,10 +5,9 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { contact } from '../lib/data'
 
-// To have messages delivered straight to your inbox without opening an email app, create a free form at
-// formspree.io and put its URL in .env.local as NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
-// Without it, the form opens the visitor's own email app with the message filled in.
-const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || ''
+// Messages go to Sahithi's inbox through Formspree (the endpoint is public by design). If the endpoint is ever
+// emptied, the form falls back to opening the visitor's email app. NEXT_PUBLIC_FORM_ENDPOINT overrides it at build time.
+const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || 'https://formspree.io/f/xqeynryv'
 
 export default function Contact() {
   const root = useRef(null)

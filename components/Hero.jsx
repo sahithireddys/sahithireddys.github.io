@@ -12,6 +12,7 @@ export default function Hero() {
   const root = useRef(null)
   const nav = useRef(null)
   const [seen, setSeen] = useState(false)
+  const [menu, setMenu] = useState(false) // phone menu panel
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -46,26 +47,43 @@ export default function Hero() {
     window.addEventListener('pointerover', onOver)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
+    const onKey = (e) => e.key === 'Escape' && setMenu(false)
+    const onDown = (e) => {
+      if (!nav.current?.contains(e.target)) setMenu(false)
+    }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onDown)
 
     return () => {
       ctx.revert()
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerover', onOver)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onDown)
     }
   }, [])
 
   return (
     <>
-      <nav className="nav" ref={nav}>
+      <nav className={`nav ${menu ? 'menu-open' : ''}`} ref={nav}>
         <div className="navin">
-          <button className="brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Sahithi Reddy</button>
+          <button className="brand" onClick={() => { setMenu(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>Sahithi Reddy</button>
           <button onClick={() => go('about')}>About</button>
           <button className="nx" onClick={() => go('experience')}>Experience</button>
           <button onClick={() => go('projects')}>Projects</button>
           <button className="nx" onClick={() => go('skills')}>Skills</button>
           <button className="nx" onClick={() => go('publications')}>Publications</button>
           <button onClick={() => go('contact')}>Connect</button>
+          {/* phones only: one button that opens the full list of links */}
+          <button className="navtoggle" aria-label="Menu" aria-expanded={menu} aria-controls="navpanel" onClick={() => setMenu((m) => !m)}>
+            <i /><i />
+          </button>
+        </div>
+        <div className="navpanel" id="navpanel" aria-hidden={!menu}>
+          {[['about', 'About'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['publications', 'Publications'], ['contact', 'Connect']].map(([id, label]) => (
+            <button key={id} tabIndex={menu ? 0 : -1} onClick={() => { setMenu(false); go(id) }}>{label}</button>
+          ))}
         </div>
       </nav>
 

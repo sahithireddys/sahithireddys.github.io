@@ -92,7 +92,7 @@ export default function Contact() {
               {status === 'sending' ? 'Sending…' : 'Send message'} <i />
             </button>
             <p className={`cf-note ${status}`} role="status">
-              {status === 'sent' && 'Thanks, your message is on its way.'}
+              {status === 'sent' && "Thanks, I'm excited to read this. I'll get back to you soon."}
               {status === 'mailto' && 'Opening your email app with the message filled in.'}
               {status === 'error' && `Something went wrong. Please email ${contact.email} directly.`}
             </p>

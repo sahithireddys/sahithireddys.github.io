@@ -1,7 +1,7 @@
 import './globals.css'
 
 const SITE = 'https://sahithireddys.github.io'
-const TITLE = 'Sahithi Reddy · Software Engineer'
+const TITLE = 'Sahithi Reddy Senagapally · Software Engineer'
 const DESC = 'Backend systems, cloud pipelines and AI agents.'
 
 export const metadata = {
